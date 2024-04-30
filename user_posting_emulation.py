@@ -13,9 +13,27 @@ random.seed(100)
 
 
 class AWSDBConnector:
+    '''
+     A class to emulate users posting data
 
+    ...
+
+    Attributes
+    ----------
+    credentials = dictionary of credentials
+    self.HOST = HOST credential value
+    self.USER = USER credential value
+    self.PASSWORD = PASSWORD credential value
+    self.DATABASE = DATABASE credential value
+    self.PORT = PORT credential value
+
+    Methods
+    -------
+    read_db_creds = Method used to read a yaml file and return the credentials as a dictionary
+    create_db_connector = Method to create an SQLAlchemy Engine object to connect to database given the parameters above
+    '''
     def __init__(self):
-        credentials = self._read_db_creds('db_creds.yaml')
+        credentials = self.read_db_creds('db_creds.yaml')
         self.HOST = credentials['HOST']
         self.USER = credentials['USER']
         self.PASSWORD = credentials['PASSWORD']
@@ -23,7 +41,16 @@ class AWSDBConnector:
         self.PORT = credentials['PORT']
         
     def read_db_creds(self, path_to_credentials):
+        '''
+        Use Yaml to load a credentials file.
+        Parameters
+        ----------
+        path_to_credentials(str) : Path to the credentials file
         
+        Returns 
+        -------
+        Loaded Credentials
+        '''
         with open(path_to_credentials, 'r') as db_creds:
             loaded_creds = yaml.safe_load(db_creds)
         return loaded_creds
@@ -37,6 +64,9 @@ new_connector = AWSDBConnector()
 
 
 def run_infinite_post_data_loop():
+    '''
+    An infinitely running method to pull data from the the engine in previously created connector object and prints out 3 different types of data.
+    '''
     while True:
         sleep(random.randrange(0, 2))
         random_row = random.randint(0, 11000)
@@ -70,7 +100,3 @@ def run_infinite_post_data_loop():
 if __name__ == "__main__":
     run_infinite_post_data_loop()
     print('Working')
-    
-    
-
-
