@@ -7,6 +7,7 @@ import json
 import yaml
 import sqlalchemy
 from sqlalchemy import text
+import datetime
 
 
 random.seed(100)
@@ -62,6 +63,11 @@ class AWSDBConnector:
 
 new_connector = AWSDBConnector()
 
+def serialize_datetime(obj): 
+    if isinstance(obj, datetime.datetime): 
+        return obj.isoformat() 
+    raise TypeError("Type not serializable") 
+
 
 def run_infinite_post_data_loop():
     '''
@@ -74,27 +80,74 @@ def run_infinite_post_data_loop():
 
         with engine.connect() as connection:
 
+            #pinsting
             pin_string = text(f"SELECT * FROM pinterest_data LIMIT {random_row}, 1")
             pin_selected_row = connection.execute(pin_string)
             
             for row in pin_selected_row:
                 pin_result = dict(row._mapping)
+                
+            pin_invoke_url = "https://rluf8oam8i.execute-api.us-east-1.amazonaws.com/dev/topics/0e5f67235f6b.pin"
+            #To send JSON messages you need to follow this structure
+            payload = json.dumps({
+                "records": [
+                    {
+                    #Data should be send as pairs of column_name:value, with different columns separated by commas       
+                    "value": pin_result
+                    }
+                ]
+            }, default=serialize_datetime)
+            headers = {'Content-Type': 'application/vnd.kafka.json.v2+json'}
+            pin_response = requests.request("POST", pin_invoke_url, headers=headers, data=payload)
 
+            #geostring
             geo_string = text(f"SELECT * FROM geolocation_data LIMIT {random_row}, 1")
             geo_selected_row = connection.execute(geo_string)
             
             for row in geo_selected_row:
                 geo_result = dict(row._mapping)
 
+            geo_invoke_url = "https://rluf8oam8i.execute-api.us-east-1.amazonaws.com/dev/topics/0e5f67235f6b.geo"
+            #To send JSON messages you need to follow this structure
+            payload = json.dumps({
+                "records": [
+                    {
+                    #Data should be send as pairs of column_name:value, with different columns separated by commas       
+                    "value": geo_result
+                    }
+                ]
+            }, default=serialize_datetime)
+            headers = {'Content-Type': 'application/vnd.kafka.json.v2+json'}
+            geo_response = requests.request("POST", geo_invoke_url, headers=headers, data=payload)
+            
+            #userstring
             user_string = text(f"SELECT * FROM user_data LIMIT {random_row}, 1")
             user_selected_row = connection.execute(user_string)
             
             for row in user_selected_row:
                 user_result = dict(row._mapping)
+                
+            user_invoke_url = "https://rluf8oam8i.execute-api.us-east-1.amazonaws.com/dev/topics/0e5f67235f6b.user"
+            #To send JSON messages you need to follow this structure
+            payload = json.dumps({
+                "records": [
+                    {
+                    #Data should be send as pairs of column_name:value, with different columns separated by commas       
+                    "value": user_result
+                    }
+                ]
+            }, default=serialize_datetime)
+            headers = {'Content-Type': 'application/vnd.kafka.json.v2+json'}
+            user_response = requests.request("POST", user_invoke_url, headers=headers, data=payload)
             
             print(pin_result)
+            print(pin_response)
+            
             print(geo_result)
+            print(geo_response)
+            
             print(user_result)
+            print(user_response)
 
 
 if __name__ == "__main__":
