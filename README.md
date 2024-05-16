@@ -31,3 +31,7 @@ I have an IAM role with all the permissions created
 
 #### MSK + MSK Connect
 These have been used for kafka management through AWS
+
+## Databricks
+Through this project i have used databricks to import, manage, clean and perform analytical queries on the data.
+The structure I have followed is to have a notebook for the initial configurations including mounting the S3 bucket with the data in. Next I have 3 seperated notebooks to clean each of the three data tables. 
