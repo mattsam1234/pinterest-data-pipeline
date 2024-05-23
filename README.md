@@ -35,3 +35,16 @@ These have been used for kafka management through AWS
 ## Databricks
 Through this project i have used databricks to import, manage, clean and perform analytical queries on the data.
 The structure I have followed is to have a notebook for the initial configurations including mounting the S3 bucket with the data in. Next I have 3 seperated notebooks to clean each of the three data tables. 
+#### Api Gateway
+This is a simple tool on AWS for setting up custom APIs 
+
+## My experience while doing this project 
+#### Chapter 1 - The Setup
+The setup for this project was a long process to link all the AWS softwares and get them to talk to each other. \
+From installing kafka and the other necessary modules onto the EC2 machine to even setting up the key pairs to be able to connect to the EC2 machine.\
+I faced a couple issues when doing the setup, including not allowing proxy on my HTTP any request but issues were quickly resolved to the point the data now flows through to the S3 bucket as it should. \
+Whilst the setup for this style of pipeline is fiddly in terms of having lots of locations for different config files and settings, once you get the hang of where to look and which configs are for which service it becomes very clear and very efficient in terms of time taken to setup. 
+
+#### Chapter 2 - Databricks
+During this step I have setup my Databricks account and linked through to the AWS S3 bucket with my data that has been pushed from my user posting emulation. \
+Databricks is very easy to use and being able to swap between languages means changing schemas etc in sql then switching back to python is incredible easy.\

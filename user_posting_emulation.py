@@ -92,7 +92,6 @@ def run_infinite_post_data_loop():
             payload = json.dumps({
                 "records": [
                     {
-                    #Data should be send as pairs of column_name:value, with different columns separated by commas       
                     "value": pin_result
                     }
                 ]
@@ -112,7 +111,6 @@ def run_infinite_post_data_loop():
             payload = json.dumps({
                 "records": [
                     {
-                    #Data should be send as pairs of column_name:value, with different columns separated by commas       
                     "value": geo_result
                     }
                 ]
@@ -132,7 +130,6 @@ def run_infinite_post_data_loop():
             payload = json.dumps({
                 "records": [
                     {
-                    #Data should be send as pairs of column_name:value, with different columns separated by commas       
                     "value": user_result
                     }
                 ]
