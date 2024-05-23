@@ -32,11 +32,42 @@ I have an IAM role with all the permissions created
 #### MSK + MSK Connect
 These have been used for kafka management through AWS
 
-## Databricks
+#### Databricks
 Through this project i have used databricks to import, manage, clean and perform analytical queries on the data.
 The structure I have followed is to have a notebook for the initial configurations including mounting the S3 bucket with the data in. Next I have 3 seperated notebooks to clean each of the three data tables. 
+
 #### Api Gateway
 This is a simple tool on AWS for setting up custom APIs 
+
+## How it works
+#### Step 1 - Configurations
+Here is a UML diagram covering how the data flows in this project \
+![pinterst UML diagram](pinterest-UML-diagram.png "Pinterest UML Diagram")
+The main data flow is generated from the user_posting_emulation.py which is a script that emulates a person posting on linked in. This pushes data to 3 tables, a pinterest table with post details, a geo table with location details and a user table with user data. This all flows to an S3 bucket. 
+
+#### Step 2 - The Notebooks
+I have split my code into 5 notebooks. The first is the configurations + setup notebook. This simply mounts the data from the S3 bucket into databricks. Next is the 3 data cleaning notebooks. Each of these takes the data from the tables and cleans it to get it all standardised. \
+The final notebook is the queries notebook. This is the most important one which runs the 3 data cleaning notebooks and then answers a series of question by grouping and filtering the data. Below are screenshots of the questions answered with example data.
+
+#### Q1 - Find the most popular category in each country
+![pinterest queries Q1 ](pinterest-screenshots/q1.png "Pintereest queries Q1 ")
+#### Q2 - Find which was the most popular category each year. Find how many posts each category had between 2018 - 2022
+![pinterest queries Q2 ](pinterest-screenshots/q2.png "Pintereest queries Q2 ")
+#### Q3 - Find the user with the most followers in each country
+I have split this question into two queries. The first part, shown below, is to find the top user and follower count per country.
+![pinterest queries Q3 ](pinterest-screenshots/q3-1.png "Pintereest queries Q3 ")
+Next i narrowed this down to find the top country based on the above query
+![pinterest queries Q3 ](pinterest-screenshots/q3-2.png "Pintereest queries Q3 ")
+#### Q4 - Top category per age group
+![pinterest queries Q4 ](pinterest-screenshots/q4.png "Pintereest queries Q4 ")
+#### Q5 - Median follower count per age group
+![pinterest queries Q5 ](pinterest-screenshots/q5.png "Pintereest queries Q5 ")
+#### Q6 - Find how many users have joined each year
+![pinterest queries Q6 ](pinterest-screenshots/q6.png "Pintereest queries Q6 ")
+#### Q7 - Find the median follower count of users based on their joining year
+![pinterest queries Q7 ](pinterest-screenshots/q7.png "Pintereest queries Q7 ")
+#### Q8 - Find the median follower count of users based on their joining and age group
+![pinterest queries Q8 ](pinterest-screenshots/q8.png "Pintereest queries Q8 ")
 
 ## My experience while doing this project 
 #### Chapter 1 - The Setup
@@ -48,3 +79,8 @@ Whilst the setup for this style of pipeline is fiddly in terms of having lots of
 #### Chapter 2 - Databricks
 During this step I have setup my Databricks account and linked through to the AWS S3 bucket with my data that has been pushed from my user posting emulation. \
 Databricks is very easy to use and being able to swap between languages means changing schemas etc in sql then switching back to python is incredible easy.\
+Overall using the databricks notebooks for was incredibly easy. Learning spark was a whole new language but I translated it across from my knowledge of both SQL and pandas. 
+
+#### Chapter 3 - MWAA
+MWAA is the AWS platform for managing Airflow. Airflow is used to automate tasks on a schedule that you set and control and allows for graceful error management on the tasks. \
+During this project I used MWAA to run the queries notebook on a daily schedule. This is to emulate batch processing of data. \
