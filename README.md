@@ -26,7 +26,8 @@ Most of this project is built on AWS. Heres a list of the services used
 
 #### Databricks
 Along with the AWS Through this project I have used databricks to import, manage, clean and perform analytical queries on the data.
-The structure I have followed is to have a notebook for the initial configurations including mounting the S3 bucket with the data in. Next I have 3 seperated notebooks to clean each of the three data tables. 
+The structure I have followed is to have a notebook for the initial configurations including mounting the S3 bucket with the data in. Next I have 3 seperated notebooks to clean each of the three data tables. \
+For my Kinesis streaming I have used 1 notebook to initialise and clean the streams and then send the data to 3 Delta Tables
 
 
 ## How it works

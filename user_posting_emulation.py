@@ -57,6 +57,13 @@ class AWSDBConnector:
         return loaded_creds
         
     def create_db_connector(self):
+        '''
+        Use the loaded parameters to initialise an SQL Alchemy engine object
+        
+        Returns 
+        -------
+        Initialised Engine
+        '''
         engine = sqlalchemy.create_engine(f"mysql+pymysql://{self.USER}:{self.PASSWORD}@{self.HOST}:{self.PORT}/{self.DATABASE}?charset=utf8mb4")
         return engine
 
@@ -64,6 +71,16 @@ class AWSDBConnector:
 new_connector = AWSDBConnector()
 
 def serialize_datetime(obj): 
+    '''
+    Checks if the object is a datetime.datetime object and then converts it to iso format 
+    Parameters
+    ----------
+    obj : the object to be checked
+    
+    Returns 
+    -------
+    Object converted to iso format
+    '''
     if isinstance(obj, datetime.datetime): 
         return obj.isoformat() 
     raise TypeError("Type not serializable") 
