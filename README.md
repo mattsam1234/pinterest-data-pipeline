@@ -5,8 +5,7 @@
 1. [The Scope](#the-scope)
 2. [Overview](#overview)
 3. [What it does](#what-it-does)
-4. [What I used](#what-i-used)
-5. [What I learned](#what-i-learned)
+4. [Dependencies](#dependencies)
 6. [Instructions](#instructions)
 
 ## The Scope
@@ -14,7 +13,7 @@ Pinterest crunches billions of data points every day to decide how to provide mo
 
 ## Overview 
 
-## What I used
+## Dependencies
 #### AWS
 Most of this project is built on AWS. Heres a list of the services used
 - EC2
